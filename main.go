@@ -7,7 +7,9 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-    currentTime := time.Now().Format("2006-01-02 15:04:05")
+    // Load the local time zone (change "Asia/Kolkata" if needed)
+    loc, _ := time.LoadLocation("Asia/Kolkata")
+    currentTime := time.Now().In(loc).Format("2006-01-02 15:04:05 MST")
     fmt.Fprintf(w, "Current Date & Time: %s", currentTime)
 }
 

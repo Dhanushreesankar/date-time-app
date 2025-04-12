@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: date-time-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: date-time-app
+  template:
+    metadata:
+      labels:
+        app: date-time-app
+    spec:
+      containers:
+      - name: date-time-app
+        image: dhanusankar66/date-time-app:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: TZ
+          value: "Asia/Kolkata"  # Set your desired timezone here
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: date-time-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: date-time-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
